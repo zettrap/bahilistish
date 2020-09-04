@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,8 +38,8 @@ session_start();
 		<div id="menu" class="container">
 			<ul>
 				<li ><a href="index.php" accesskey="1" title="">Главная</a></li>
-				<<li><a href='news.php' accesskey='1' title=''>Отзывы</a></li>
-				<li><a href='gost.php' accesskey='2' title=''>Написать отзыв</a></li>
+				<li><a href='news.php' accesskey='1' title=''>Новости</a></li>
+				<li><a href='gost.php' accesskey='2' title=''>Отзывы</a></li>
 				<li><a href="avtorizaciya.php" accesskey="3" title="">Авторизация</a></li>
 				<li><a href="info.php" accesskey="4" title="">Основная информация</a></li>
 				<li><a href="kontakty.php" accesskey="5" title="">Контакты</a></li>
@@ -85,7 +86,9 @@ if ($_SESSION['id']>0)
 	       <input type='radio' name='subscription' value='0' />
 	      </p>
   </p>
+ 
   <p>
+  
     <input type='submit' value='Отправить' name='add_q' />
   </p>
 </form>";

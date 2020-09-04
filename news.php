@@ -33,15 +33,20 @@
 		<div id="menu" class="container">
 			<ul>
 				<li><a href="index.php" accesskey="1" title="">Главная</a></li>
-				<li><a href='news.php' accesskey='1' title=''>Отзывы</a></li>
-				<li><a href='gost.php' accesskey='2' title=''>Написать отзыв</a></li>
+			<li><a href='news.php' accesskey='1' title=''>Новости</a></li>
+				<li><a href='gost.php' accesskey='2' title=''>Отзывы</a></li>
 				<li><a href="avtorizaciya.php" accesskey="3" title="">Авторизация</a></li>
 				<li><a href="info.php" accesskey="4" title="">Основная информация</a></li>
 				<li><a href="kontakty.php" accesskey="5" title="">Контакты</a></li>
 			</ul>
 		</div>
 	</div>
-	
+<div id="page" class="container">
+		<div class="column1">
+		<div class="column2">
+		<div class="column3">
+		<div class="column4">
+			<div class="title">	
 <?php
 
 $host = "localhost";
@@ -59,6 +64,12 @@ while ($result = mysqli_fetch_array($sql)) {
     echo "<img src = " .  $result['foto'] . ">"  .  '<br><br>' ;
 }
 ?> 
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 	<div id="portfolio-wrapper">
 		<div id="portfolio" class="container">
 			<div class="title">

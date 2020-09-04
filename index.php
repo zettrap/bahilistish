@@ -37,8 +37,8 @@ $q=0;
 		<div id="menu" class="container">
 			<ul>
 				<li class="current_page_item"><a href="index.php" accesskey="1" title="">Главная</a></li>
-				<li><a href='news.php' accesskey='1' title=''>Отзывы</a></li>
-				<li><a href='gost.php' accesskey='2' title=''>Написать отзыв</a></li>
+			<li><a href='news.php' accesskey='1' title=''>Новости</a></li>
+				<li><a href='gost.php' accesskey='2' title=''>Отзывы</a></li>
 				<li><a href="avtorizaciya.php" accesskey="3" title="">Авторизация</a></li>
 				<li><a href="info.php" accesskey="4" title="">Основная информация</a></li>
 				<li><a href="kontakty.php" accesskey="5" title="">Контакты</a></li>

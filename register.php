@@ -36,8 +36,8 @@ session_start();
 		<div id="menu" class="container">
 			<ul>
 				<li ><a href="index.php" accesskey="1" title="">Главная</a></li>
-				<li><a href='news.php' accesskey='1' title=''>Отзывы</a></li>
-				<li><a href='gost.php' accesskey='2' title=''>Написать отзыв</a></li>
+			<li><a href='news.php' accesskey='1' title=''>Новости</a></li>
+				<li><a href='gost.php' accesskey='2' title=''>Отзывы</a></li>
 				<li class="current_page_item"><a href="avtorizaciya.php" accesskey="3" title="">Авторизация</a></li>
 				<li><a href="info.php" accesskey="4" title="">Основная информация</a></li>
 				<li><a href="kontakty.php" accesskey="5" title="">Контакты</a></li>
@@ -52,22 +52,23 @@ session_start();
     $link=mysqli_connect($host,$user,$pass);
 mysqli_select_db($link,$db_name);
 
-	//if (isset($_POST[`login`]) && isset($_POST[`password`]))	
-	if(isset($_POST[`submit`]))
+	//if (isset($_POST['login']) && isset($_POST['password']))	
+	if(isset($_POST['submit']))
         {
           $err=array();
 
-          if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST[`login`]))
+          if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST['login']))
           {
             $err[]="Логин может состоять только из букв английского алфавита и цифр";
           }
 
-          if(strlen($_POST[`login`])<3 or strlen($_POST[`login`])>32)
+          if(strlen($_POST['login'])<3 or strlen($_POST['login'])>32)
           {
             $err[] = "Логин должен быть не меньше 3-х символов и не больше 32";
           }
 
-          $query=mysqli_query($link,"SELECT COUNT(id) FROM users WHERE login=`".mysqli_real_escape_string($_POST[`login`]));
+         $query = "SELECT * FROM users WHERE login=`".mysqli_real_escape_string($_POST[`login`]);
+
 		 
 
           if(mysqli_result($query, 0) > 0)
@@ -75,19 +76,19 @@ mysqli_select_db($link,$db_name);
             $err[] = "Пользователь с таким логином уже существует в базе данных";
           }
 
-          if(strlen($_POST[`Email`])<1)
+          if(strlen($_POST['Email'])<1)
           {
             $err[]= "Введите E-mail";
           }
 
           if(count($err) == 0)
           {
-            $login = $_POST[`login`];
-            $password = trim($_POST[`password`]);
-            $Email = $_POST[`Email`];
-            $pol = $_POST[`pol`];
-            mysqli_query($link,"INSERT INTO users SET login=`".$login."`, password=`".$password."`, email=`".$Email."`, pol=`".$pol."`");
-            echo `Перейти к <a href="avtorizaciya.php">авторизации</a>`;
+            $login = $_POST['login'];
+            $password = trim($_POST['password']);
+            $Email = $_POST['Email'];
+            $pol = $_POST['pol'];
+            mysqli_query($link,"INSERT INTO users SET login='".$login."', password='".$password."', email='".$Email."', pol='".$pol."'");
+            echo 'Перейти к <a href="avtorizaciya.php">авторизации</a>';
           }
 
           else
@@ -100,38 +101,38 @@ mysqli_select_db($link,$db_name);
               }
           }
         }
-   $sql = mysqli_query($link,$query) or die(mysqli_error($link));
-    if (mysqli_num_rows($link,$sql) == 1) 
+   //$sql = mysqli_query($link,$query) or die(mysqli_error($link));
+    if (mysqli_num_rows($query) == 1) 
 		
 	{	
-        $row = mysqli_fetch_assoc($sql);
-        $_SESSION[`user_id`] = $row[`id`];
-		 $_SESSION[`user_per`] = $row[`prava`];
-		if ($_SESSION[`user_per`]=="admin")
+        $row = mysqli_fetch_assoc($query);
+        $_SESSION['user_id'] = $row['id'];
+		 $_SESSION['user_per'] = $row['prava'];
+		if ($_SESSION['user_per']=="admin")
 		{
-	header (`location: admin.php`);
-	echo `Вы вошли, как админ `.$_POST[`login`].` войдите в <a href="admin.php">личный кабинет</a>`;
+	header ('location: admin.php');
+	echo 'Вы вошли, как админ '.$_POST['login'].' войдите в <a href="admin.php">личный кабинет</a>';
 		}
-		if ($_SESSION[`user_per`]=="user")
+		if ($_SESSION['user_per']=="user")
 		{
-		header (`location: user.php`);
-		echo `Вы вошли, как пользователь `.$_POST[`login`].` войдите в <a href="user.php">личный кабинет</a>`;
+		header ('location: user.php');
+		echo 'Вы вошли, как пользователь '.$_POST['login'].' войдите в <a href="user.php">личный кабинет</a>';
 		}
 	}	
     else {
-      die(`Неверное имя пользователя или пароль`);	
+      die('Неверное имя пользователя или пароль');	
     }
 ?>
 
 <form method="post">
-<input type="text" name="login" placeholder=`Логин`><br><br>
-<input type="password" name="password" placeholder=`Пароль`><br><br>
- <input type=`email` name=`Email` placeholder=`email`>
+<input type="text" name="login" placeholder='Логин'><br><br>
+<input type="password" name="password" placeholder='Пароль'><br><br>
+ <input type='email' name='Email' placeholder='email'>
 <br> <br> Выберите пол:&nbsp;&nbsp;
-            <select name=`pol`>
-              <option value=`0`>Не указан</option>
-              <option value=`1`>Мужской</option>
-              <option value=`2`>Женский</option>
+            <select name='pol'>
+              <option value='0'>Не указан</option>
+              <option value='1'>Мужской</option>
+              <option value='2'>Женский</option>
             </select>
  <br><br><input type="submit" name="submit" value="Зарегистрироваться" />
 </form>

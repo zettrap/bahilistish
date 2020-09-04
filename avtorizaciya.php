@@ -36,8 +36,8 @@ session_start();
 		<div id='menu' class='container'>
 			<ul>
 				<li ><a href='index.php' accesskey='1' title=''>Главная</a></li>
-				<li><a href='news.php' accesskey='1' title=''>Отзывы</a></li>
-				<li><a href='gost.php' accesskey='2' title=''>Написать отзыв</a></li>
+				<li><a href='news.php' accesskey='1' title=''>Новости</a></li>
+				<li><a href='gost.php' accesskey='2' title=''>Отзывы</a></li>
 				<li class='current_page_item'><a href='avtorizaciya.php' accesskey='3' title=''>Авторизация</a></li>
 				<li><a href='info.php' accesskey='4' title=''>Основная информация</a></li>
 				<li><a href='kontakty.php' accesskey='5' title=''>Контакты</a></li>
@@ -53,46 +53,40 @@ session_start();
 </form>
 
 <?php 
-
        $host="localhost";
-    $user="zettrap";
-    $pass="199907zetTrap"; 
+    $user="root";
+    $pass="root"; 
     $db_name="my_bd_zaytsev";
-    $link=mysqli_connect($host,$user,$pass);
-    mysqli_select_db($link,$db_name);
+    $link=mysqli_connect(localhost,root,root,my_bd_zaytsev)or die(mysqli_error());;
+    //mysqli_select_db($link,my_bd_zaytsev);
 
 	//if (isset($_POST['login']) && isset($_POST['password']))	
-	if (isset($_POST[`log_in`]))
+	if (isset($_POST['log_in']))
 	{
     $login = $_POST['login'];
     $password = $_POST['password'];
-    $query ="SELECT id, password, login, prava FROM users WHERE login='".mysqli_real_escape_string($link,$login);
-	$data=mysqli_fetch_assoc($query);
+    $query =mysqli_query($link, "SELECT `id`,'prava' FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
+	$data=mysqli_fetch_array($query);
 	
-	if ($data[`password`]==$password)
+	if ($data['password']==$password)
 	{
 		
-		$_SESSION[`id`]=$data['id'];
+		$_SESSION['id']=$data['id'];
 		echo "вы вошли как ".$data['login'].". "."Войдите в <a href=".$data['prava'].".php".">личный кабинет</a>";				
 		
 	}
 	else {
       echo('Неверное имя пользователя или пароль');	
     }
-
-	
-	
-	
-	
-    $sql = mysqli_query($link,$query) or die(mysqli_error($link));
+    $sql = mysqli_query($link,$query);
     if (mysqli_num_rows($sql) == 1) 
 	{	
-        $row = mysqli_fetch_assoc($sql);
+        $row = mysqli_fetch_assoc($query);
         $_SESSION['user_id'] = $row['id'];
 		 $_SESSION['user_per'] = $row['prava'];
 		if ($_SESSION['user_per']=="admin")
 		{
-	//header ('location: admin.php');
+	header ('location: admin.php');
 	echo 'Вы вошли, как админ '.$_POST['login'].' войдите в <a href="admin.php">личный кабинет</a>';
 		}
 		if ($_SESSION['user_per']=="user")
